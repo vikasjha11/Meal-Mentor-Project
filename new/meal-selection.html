@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.png" alt="Mentor Logo">
+        <span>Meal Mentor</span>
+    </div>
+    <div class="auth-buttons">
+        <button onclick="window.location.href='profile.html';">Profile</button>
+    </div>
+</header>
+<main>
+    <div class="meal-selection">
+        <!-- Pantry List -->
+        <div class="pantry-list">
+            <h2>My Pantry</h2>
+            <input type="text" id="ingredient" placeholder="Add ingredients..." />
+            <button id="add-ingredient">Add Ingredient</button>
+            <ul id="ingredient-list"></ul>
+        </div>
+
+        <!-- Work Phase: Today's Meal & Recipe Search -->
+        <div class="work-phase">
+            <h2>Today's Meal</h2>
+            <input type="text" id="recipe-name" placeholder="Enter Recipe Name..." />
+            <button onclick="searchRecipe()">Get Recipe</button>
+        </div>
+
+        <!-- Featured Meals -->
+        <div class="featured-picks">
+            <h2>Featured Picks</h2>
+            <div class="picks">
+                <div class="pick">
+                    <img src="pasta.jpg" alt="Meal 1">
+                    <h4>Pasta Primavera</h4>
+                </div>
+                <div class="pick">
+                    <img src="chilli chicken.jpg" alt="Meal 2">
+                    <h4>chilli Chicken</h4>
+                </div>
+                <div class="pick">
+                    <img src="caesar.jpg" alt="Meal 3">
+                    <h4>Caesar Salad</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <button onclick="window.location.href='index.html';">Back to Home</button>
+</footer>
+
+<script src="meal-selection.js"></script>
+</body>
+</html>

@@ -1,39 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Haven</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Mentor - Home</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Recipe Haven</h1>
-        <nav>
-            <a href="login.html">Login</a>
-            <a href="signup.html">Signup</a>
-        </nav>
+        <div class="logo">
+            <img src="logo.png" alt="Mentor Logo">
+            <span>Meal Mentor</span>
+        </div>
+        <div class="auth-buttons">
+            <button onclick="window.location.href = 'login.html';">Login</button>
+            <button onclick="window.location.href = 'signup.html';">Sign Up</button>
+        </div>
     </header>
     <main>
-        <section class="welcome">
-            <h2>Welcome to Recipe Haven</h2>
-            <p>Explore, Cook, and Enjoy the best recipes!</p>
-        </section>
-        <section class="featured-recipes">
-            <h3>Featured Recipes</h3>
-            <div class="recipes">
-                <div class="recipe-card">
-                    <img src="recipe1.jpg" alt="Recipe 1">
-                    <h4>Pasta</h4>
-                </div>
-                <div class="recipe-card">
-                    <img src="recipe2.jpg" alt="Recipe 2">
-                    <h4>Salad</h4>
-                </div>
+        <div class="content">
+            <div class="tagline">
+                <h2>Learn. Cook. Succeed.</h2>
+                <p>Become a better chef with personalized guidance from Mentor.</p>
+                <button onclick="window.location.href = 'meal-selection.html';">Get Started</button>
             </div>
-        </section>
+            <div class="featured-meals">
+                <img src="meal1.jpg" alt="Featured Meal 1">
+                <img src="meal2.jpg" alt="Featured Meal 2">
+                <img src="meal3.jpg" alt="Featured Meal 3">
+                <img src="meal4.jpg" alt="Featured Meal 4">
+            </div>
+        </div>
     </main>
-   
 </body>
 </html>

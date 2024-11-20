@@ -19,7 +19,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
 
         if (response.ok) {
             alert(data.message);
-            window.location.href = 'dashboard.html';  // Redirect to dashboard on successful login
+            window.location.href = 'meal-selection.html';  // Redirect to dashboard on successful login
         } else {
             alert(data.message || 'Login failed');
         }

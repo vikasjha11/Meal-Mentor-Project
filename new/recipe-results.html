@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Results</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header, footer {
+            background-color: #f8f9fa;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .recipe-container {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            align-items: flex-start;
+            background: #fff;
+        }
+
+        .recipe-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .recipe-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .recipe-details {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ingredients, .instructions {
+            flex: 1;
+        }
+
+        .ingredients ul, .instructions ol {
+            padding-left: 20px;
+        }
+
+        .video-button {
+            margin-top: 10px;
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .video-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="logo.png" alt="Mentor Logo">
+        <span>Meal Mentor</span>
+    </div>
+    <div class="auth-buttons">
+        <button onclick="window.location.href='profile.html';">Profile</button>
+    </div>
+</header>
+
+<main>
+    <h2>Recipe Results</h2>
+    <div id="recipes">
+        <!-- Recipes will be dynamically added here -->
+    </div>
+</main>
+
+<footer>
+    <button onclick="window.location.href='index.html';">Back to Home</button>
+</footer>
+
+<script>
+// Extracting the recipe name from URL
+const urlParams = new URLSearchParams(window.location.search);
+const recipeName = urlParams.get('recipe');
+
+// MealDB API URL
+const mealDbApiUrl = `https://www.themealdb.com/api/json/v1/1/search.php?s=${recipeName}`;
+
+// Fetch recipe data from MealDB API
+fetch(mealDbApiUrl)
+    .then(response => response.json())
+    .then(data => {
+        if (data.meals && data.meals.length > 0) {
+            data.meals.forEach(recipe => displayRecipeDetails(recipe));
+        } else {
+            displayNotFound();
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching recipe data:", error);
+        displayNotFound();
+    });
+
+// Function to display a recipe
+function displayRecipeDetails(recipe) {
+    const recipesContainer = document.getElementById("recipes");
+
+    const recipeContainer = document.createElement("div");
+    recipeContainer.classList.add("recipe-container");
+
+    // Recipe image and ingredients
+    const recipeImage = document.createElement("div");
+    recipeImage.classList.add("recipe-image");
+    recipeImage.innerHTML = `
+        <h3>${recipe.strMeal}</h3>
+        <img src="${recipe.strMealThumb}" alt="${recipe.strMeal}">
+        <div class="ingredients">
+            <h4>Ingredients</h4>
+            <ul>${generateIngredientsList(recipe)}</ul>
+        </div>
+    `;
+
+    // Recipe instructions (step-wise)
+    const recipeDetails = document.createElement("div");
+    recipeDetails.classList.add("recipe-details");
+    recipeDetails.innerHTML = `
+        <div class="instructions">
+            <h4>Instructions</h4>
+            <ol>${generateStepwiseInstructions(recipe.strInstructions)}</ol>
+        </div>
+        <a href="#" class="video-button" onclick="searchYouTube('${recipe.strMeal}')">Watch Recipe Video</a>
+    `;
+
+    recipeContainer.appendChild(recipeImage);
+    recipeContainer.appendChild(recipeDetails);
+
+    recipesContainer.appendChild(recipeContainer);
+}
+
+// Generate ingredients list
+function generateIngredientsList(recipe) {
+    let ingredientsHtml = "";
+    for (let i = 1; i <= 20; i++) {
+        const ingredient = recipe[`strIngredient${i}`];
+        const measure = recipe[`strMeasure${i}`];
+        if (ingredient) {
+            ingredientsHtml += `<li>${ingredient} - ${measure}</li>`;
+        }
+    }
+    return ingredientsHtml;
+}
+
+// Generate stepwise instructions
+function generateStepwiseInstructions(instructions) {
+    const steps = instructions.split(".").filter(step => step.trim() !== "");
+    return steps.map(step => `<li>${step.trim()}.</li>`).join("");
+}
+
+// Function to display "Recipe Not Found" state
+function displayNotFound() {
+    const recipesContainer = document.getElementById("recipes");
+    recipesContainer.innerHTML = `
+        <div class="recipe-container">
+            <h3>No recipes found for your search.</h3>
+        </div>
+    `;
+}
+
+// YouTube API Search
+function searchYouTube(query) {
+    const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)} recipe tutorial`;
+    window.open(youtubeSearchUrl, "_blank");
+}
+</script>
+
+</body>
+</html>
